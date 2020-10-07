@@ -4,7 +4,7 @@
 
 #### The Easy Way
 
-  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/bughunter0/TG-FileCompressor-Bot#alpha)
+  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/bughunter0/TG-FileCompressor-Bot/tree/Alpha)
 
 #### The Hard Way
 
