@@ -136,15 +136,6 @@ async def incoming_compress_message_f(bot, update):
       )
     except:
       pass            
-  else:
-    try:
-      await bot.send_message(
-        chat_id=update.chat.id,
-        text=Localisation.FF_MPEG_RO_BOT_STOR_AGE_ALREADY_EXISTS,
-        reply_to_message_id=update.message_id
-      )
-    except:
-      pass
     return
   
   if os.path.exists(saved_file_path):
