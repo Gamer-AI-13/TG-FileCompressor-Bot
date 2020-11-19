@@ -35,7 +35,7 @@ class Localisation:
     
     RCHD_TG_API_LIMIT = "Downloaded in {} seconds.\nDetected File Size: {}\nSorry. But, I cannot upload files greater than 1.9GB due to Telegram API limitations."
     
-    COMPRESS_SUCCESS = "<b>**Thank you for Using Me🤓.\n\n[Join My Channell](https://t.me/AI_bot_projects) to get news about me"
+    COMPRESS_SUCCESS = "<b>**Thank you for Using Me**🤓.\n\n[Join My Channell](https://t.me/AI_bot_projects) to get news about me"
 
     COMPRESS_PROGRESS = "⏳ ETA: {}\n🚀 Progress: {}%"
 
@@ -55,11 +55,11 @@ class Localisation:
     
     USER_ADDED_TO_DB = "User <a href='tg://user?id={}'>{}</a> added to {} till {}."
     
-    FF_MPEG_RO_BOT_STOR_AGE_ALREADY_EXISTS = "⚠️ Already One Process going on. \n or \n A media already exists. \n  Please send /cancel to delete existing media. ⚠️"
+    FF_MPEG_RO_BOT_STOR_AGE_ALREADY_EXISTS = "⚠️ Already One Process going on. \n Please try again after some time. ⚠️"
     
     HELP_MESSAGE = get_config(
         "STRINGS_HELP_MESSAGE",
-        "Hi am Video Compressor Bot \n\n1. Sent your telegram big video file \n2. Reply the file - /compress And Persentage \nEg:- /compress 50 \n Compression Take 10 -20 Minutes"
+        "Hi am Video Compressor Bot \n\n1. Sent your telegram big video file \n2. Reply the file - /compress And Persentage \nEg:- /compress 50 \n Compression Take 10 -20 Minutes if lucky it would take 1 hour"
     )
     WRONG_MESSAGE = get_config(
         "STRINGS_WRONG_MESSAGE",
