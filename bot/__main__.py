@@ -87,8 +87,6 @@ if __name__ == "__main__" :
         filters=Filters.command([Command.UPLOAD_LOG_FILE])
     )
     app.add_handler(upload_log_f_handler)
-    
-    app.add_handler(call_back_button_handler)
 
     # run the APPlication
     app.run()
