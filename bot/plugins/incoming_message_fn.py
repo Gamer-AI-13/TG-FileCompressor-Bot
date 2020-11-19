@@ -116,7 +116,6 @@ async def incoming_compress_message_f(bot, update):
         try:
           await sent_message.edit_text(
             text="Download stopped"
-            reply_to_message_id=update.message_id
           )
         except:
           pass
@@ -133,8 +132,7 @@ async def incoming_compress_message_f(bot, update):
       delete_downloads()            
     try:
       await sent_message.edit_text(                
-        text=Localisation.SAVED_RECVD_DOC_FILE    
-        reply_to_message_id=update.message_id
+        text=Localisation.SAVED_RECVD_DOC_FILE
       )
     except:
       pass
@@ -145,8 +143,7 @@ async def incoming_compress_message_f(bot, update):
     if duration is None or bitrate is None:
       try:
         await sent_message.edit_text(                
-          text="⚠️ Getting video meta data failed ⚠️" 
-          reply_to_message_id=update.message_id
+          text="⚠️ Getting video meta data failed ⚠️"
         )
       except:
           pass          
@@ -159,7 +156,6 @@ async def incoming_compress_message_f(bot, update):
     )
     await sent_message.edit_text(                    
       text=Localisation.COMPRESS_START
-      reply_to_message_id=update.message_id
     )
     c_start = time.time()
     o = await convert_video(
@@ -178,7 +174,6 @@ async def incoming_compress_message_f(bot, update):
     if o is not None:
       await sent_message.edit_text(                    
         text=Localisation.UPLOAD_START,
-        reply_to_message_id=update.message_id
       )
       u_start = time.time()
       caption = Localisation.COMPRESS_SUCCESS.replace('{}', downloaded_time, 1).replace('{}', compressed_time, 1)
@@ -202,7 +197,6 @@ async def incoming_compress_message_f(bot, update):
         try:
           await sent_message.edit_text(
             text="Upload stopped"
-            reply_to_message_id=update.message_id
           )
         except:
           pass
@@ -222,8 +216,7 @@ async def incoming_compress_message_f(bot, update):
       delete_downloads()
       try:
         await sent_message.edit_text(                    
-          text="⚠️ Compression failed ⚠️"  
-          reply_to_message_id=update.message_id
+          text="⚠️ Compression failed ⚠️" 
         )
       except:
         pass
@@ -232,8 +225,7 @@ async def incoming_compress_message_f(bot, update):
     delete_downloads()
     try:
       await sent_message.edit_text(                    
-        text="⚠️ Failed Downloaded path not exist ⚠️"  
-        reply_to_message_id=update.message_id
+        text="⚠️ Failed Downloaded path not exist ⚠️" 
       )
     except:
       pass
