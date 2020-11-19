@@ -26,9 +26,7 @@ from pyrogram import (
 from bot.plugins.incoming_message_fn import (
     incoming_start_message_f,
     incoming_compress_message_f,
-    incoming_cancel_message_f
 )
-
 
 from bot.plugins.status_message_fn import (
     exec_message_f,
@@ -69,13 +67,6 @@ if __name__ == "__main__" :
         filters=Filters.command([Command.COMPRESS])
     )
     app.add_handler(incoming_compress_message_handler)
-    
-    # CANCEL command
-    incoming_cancel_message_handler = MessageHandler(
-        incoming_cancel_message_f,
-        filters=Filters.command([Command.CANCEL])
-    )
-    app.add_handler(incoming_cancel_message_handler)
 
     # MEMEs COMMANDs
     exec_message_handler = MessageHandler(
