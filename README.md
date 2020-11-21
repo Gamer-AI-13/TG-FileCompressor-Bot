@@ -1,12 +1,7 @@
 ---
 
-# Video Compressor Bot
+# Video Compressor Bot edited by AI
 
-#### The Easy Way
-
-  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/bughunter0/TG-FileCompressor-Bot)
-
-#### The Hard Way
 
 ```sh
 virtualenv -p python3 VENV
@@ -44,6 +39,7 @@ help - To know about bot
 ## CREDITS
 
 [@SpEcHide](https://github.com/spechide/publicleech)
+for the real owner of the code
 
 #### LICENSE
 - GPLv3
