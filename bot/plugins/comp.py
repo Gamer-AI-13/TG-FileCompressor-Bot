@@ -1,0 +1,170 @@
+if len(update.command) > 1:
+    try:
+      if int(update.command[1]) <= 90 and int(update.command[1]) >= 10:
+        target_percentage = int(update.command[1])
+      else:
+        try:
+          await bot.send_message(
+            chat_id=update.chat.id,
+            text="🤬 Value should be 10 - 90",
+            reply_to_message_id=update.message_id
+          )
+          return
+        except:
+          pass
+    except:
+      pass
+  else:
+    isAuto = True
+  user_file = str(update.from_user.id) + ".FFMpegRoBot.mkv"
+  saved_file_path = DOWNLOAD_LOCATION + "/" + user_file
+  LOGGER.info(saved_file_path)
+  d_start = time.time()
+  c_start = time.time()
+  u_start = time.time()
+  status = DOWNLOAD_LOCATION + "/status.json"
+  if not os.path.exists(status):
+    sent_message = await bot.send_message(
+      chat_id=update.chat.id,
+      text=Localisation.DOWNLOAD_START,
+      reply_to_message_id=update.message_id
+    )
+    try:
+      d_start = time.time()
+      status = DOWNLOAD_LOCATION + "/status.json"
+      with open(status, 'w') as f:
+        statusMsg = {
+          'running': True,
+          'message': sent_message.message_id
+        }
+
+        json.dump(statusMsg, f, indent=2)
+      video = await bot.download_media(
+        message=update.reply_to_message,
+        file_name=saved_file_path,
+        progress=progress_for_pyrogram,
+        progress_args=(
+          bot,
+          Localisation.DOWNLOAD_START,
+          sent_message,
+          d_start
+        )
+      )
+      LOGGER.info(video)
+      if( video is None ):
+        try:
+          await sent_message.edit_text(
+            text="Download stopped"
+          )
+        except:
+          pass
+        delete_downloads()
+        LOGGER.info("Download stopped")
+        return
+    except (ValueError) as e:
+      try:
+        await sent_message.edit_text(
+          text=str(e)
+        )
+      except:
+          pass
+      delete_downloads()            
+    try:
+      await sent_message.edit_text(                
+        text=Localisation.SAVED_RECVD_DOC_FILE
+      )
+    except:
+      pass
+  
+  if os.path.exists(saved_file_path):
+    downloaded_time = TimeFormatter((time.time() - d_start)*1000)
+    duration, bitrate = await media_info(saved_file_path)
+    if duration is None or bitrate is None:
+      try:
+        await sent_message.edit_text(                
+          text="⚠️ Getting video meta data failed ⚠️"
+        )
+      except:
+          pass          
+      delete_downloads()
+      return
+    thumb_image_path = await take_screen_shot(
+      saved_file_path,
+      os.path.dirname(os.path.abspath(saved_file_path)),
+      (duration / 2)
+    )
+    await sent_message.edit_text(                    
+      text=Localisation.COMPRESS_START
+    )
+    c_start = time.time()
+    o = await convert_video(
+           saved_file_path, 
+           DOWNLOAD_LOCATION, 
+           duration, 
+           bot, 
+           sent_message, 
+           target_percentage, 
+           isAuto
+         )
+    compressed_time = TimeFormatter((time.time() - c_start)*1000)
+    LOGGER.info(o)
+    if o == 'stopped':
+      return
+    if o is not None:
+      await sent_message.edit_text(                    
+        text=Localisation.UPLOAD_START,
+      )
+      u_start = time.time()
+      caption = Localisation.COMPRESS_SUCCESS.replace('{}', downloaded_time, 1).replace('{}', compressed_time, 1)
+      upload = await bot.send_video(
+        chat_id=update.chat.id,
+        video=o,
+        caption=caption,
+        supports_streaming=True,
+        duration=duration,
+        thumb=thumb_image_path,
+        reply_to_message_id=update.message_id,
+        progress=progress_for_pyrogram,
+        progress_args=(
+          bot,
+          Localisation.UPLOAD_START,
+          sent_message,
+          u_start
+        )
+      )
+      if(upload is None):
+        try:
+          await sent_message.edit_text(
+            text="Upload stopped"
+          )
+        except:
+          pass
+        delete_downloads()
+        return
+      uploaded_time = TimeFormatter((time.time() - u_start)*1000)
+      await sent_message.delete()
+      delete_downloads()
+      LOGGER.info(upload.caption);
+      try:
+        await upload.edit_caption(
+          caption=upload.caption.replace('{}', uploaded_time)
+        )
+      except:
+        pass
+    else:
+      delete_downloads()
+      try:
+        await sent_message.edit_text(                    
+          text="⚠️ Compression failed ⚠️" 
+        )
+      except:
+        pass
+          
+  else:
+    delete_downloads()
+    try:
+      await sent_message.edit_text(                    
+        text="⚠️ Failed Downloaded path not exist ⚠️" 
+      )
+    except:
+      pass
