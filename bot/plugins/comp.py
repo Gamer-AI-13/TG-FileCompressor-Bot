@@ -4,5 +4,4 @@ def on_task_complete():
       add_task(data[0])
 
 def add_task(message: Message):
-    try:
-      
+    t
