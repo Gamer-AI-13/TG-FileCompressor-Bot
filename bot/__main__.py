@@ -18,11 +18,11 @@ from bot.plugins.new_join_fn import (
 
 from pyrogram import (
   Client, 
-  Filters, 
   MessageHandler,
   CallbackQueryHandler
 )
 
+from pyrogram.types import filters
 from bot.plugins.incoming_message_fn import (
     incoming_start_message_f,
     incoming_compress_message_f,
@@ -56,35 +56,35 @@ if __name__ == "__main__" :
     # START command
     incoming_start_message_handler = MessageHandler(
         incoming_start_message_f,
-        filters=Filters.command([Command.START])
+        filters=filters.command([Command.START])
     )
     app.add_handler(incoming_start_message_handler)
     
     # COMPRESS command
     incoming_compress_message_handler = MessageHandler(
         incoming_compress_message_f,
-        filters=Filters.command([Command.COMPRESS])
+        filters=filters.command([Command.COMPRESS])
     )
     app.add_handler(incoming_compress_message_handler)
 
     # MEMEs COMMANDs
     exec_message_handler = MessageHandler(
         exec_message_f,
-        filters=Filters.command([Command.EXEC])
+        filters=filters.command([Command.EXEC])
     )
     app.add_handler(exec_message_handler)
     
     # HELP command
     help_text_handler = MessageHandler(
         help_message_f,
-        filters=Filters.command([Command.HELP])
+        filters=filters.command([Command.HELP])
     )
     app.add_handler(help_text_handler)
     
     # Telegram command to upload LOG files
     upload_log_f_handler = MessageHandler(
         upload_log_file,
-        filters=Filters.command([Command.UPLOAD_LOG_FILE])
+        filters=filters.command([Command.UPLOAD_LOG_FILE])
     )
     app.add_handler(upload_log_f_handler)
 
