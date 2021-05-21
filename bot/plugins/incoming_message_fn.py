@@ -44,10 +44,10 @@ async def incoming_start_message_f(bot, update):
         reply_to_message_id=update.message_id
     )
     
-async def incoming_compress_message_f(bot, update):
+async def incoming_compress_message_f(bot, mesage):
   """/compress command"""
    
-  if update.reply_to_message is None:
+  if message.reply_to_message is None:
     try:
       await bot.send_message(
         chat_id=update.chat.id,
@@ -59,6 +59,10 @@ async def incoming_compress_message_f(bot, update):
     return
   target_percentage = 50
   isAuto = False
-  
+  message.reply_text("```Added to queue...```", quote=True)
+    data.append(message)
+    print(message)
+    if len(data) == 1:
+      add_task(message)
     
     
